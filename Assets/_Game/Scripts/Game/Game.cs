@@ -72,6 +72,8 @@ namespace _Game.Scripts.Game
 
         private void OnBallsBallsDestroyed(IReadOnlyList<Ball> destroyedBalls)
         {
+            ServiceLocator.GetInstance<PauseService>().IsPaused = false;
+            
             int minActiveCol = destroyedBalls.Min(ball => ball.Coordinates.y);
             int maxActiveCol = destroyedBalls.Max(ball => ball.Coordinates.y);
             int minActiveRow = destroyedBalls.Min(ball => ball.Coordinates.x);

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using _Game.Scripts.Game;
+using _Game.Scripts.Tools;
 using DG.Tweening;
 
 namespace _Game.Scripts.Balls
@@ -17,6 +19,8 @@ namespace _Game.Scripts.Balls
 
         public void Destroy(Ball ball)
         {
+            ServiceLocator.GetInstance<PauseService>().IsPaused = true;
+            
             List<Ball> _neighboringBalls = _finder.FindNeighborsBalls(ball);
             List<Ball> _destroyedBalls = new List<Ball> { ball };
 
