@@ -22,9 +22,13 @@ namespace _Game.Scripts.UI
 
         private ScoreController _scoreController;
         private RemainingMovesController _remainingMovesController;
+        
+        private PauseService _pauseService;
 
         public UIManager(Canvas canvas, RectTransform gameScreen, Button menuButton, Game.Game game)
         {
+            _pauseService = ServiceLocator.GetInstance<PauseService>();
+            
             _gameOverScreenPrefab = Prefabs.Load<GameOverScreenPresenter>();
             _acceptPopupPrefab = Prefabs.Load<AcceptPopup>();
 
@@ -64,10 +68,10 @@ namespace _Game.Scripts.UI
             else if (_acceptPopup.isActiveAndEnabled == false)
                 _acceptPopup.Enable();
 
-            ServiceLocator.GetInstance<PauseService>().IsPaused = true;
+            _pauseService.IsPaused = true;
 
             _acceptPopup.AddAction(() => SceneLoader.Load(Scene.MainMenu),
-                () => ServiceLocator.GetInstance<PauseService>().IsPaused = false);
+                () => _pauseService.IsPaused = false);
         }
     }
 }

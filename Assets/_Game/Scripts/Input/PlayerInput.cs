@@ -30,11 +30,11 @@ namespace _Game.Scripts.Input
                     }
                 }
             }
-
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-            {
-                ServiceLocator.GetInstance<Game.Game>().Stop();
-            }
+            //
+            // if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     ServiceLocator.GetInstance<Game.Game>().Stop();
+            // }
         }
     }
 }

@@ -9,9 +9,11 @@ namespace _Game.Scripts.Balls
     public class Destroyer
     {
         private readonly Finder _finder;
+        private readonly PauseService _pauseService;
 
         public Destroyer(Finder finder)
         {
+            _pauseService = ServiceLocator.GetInstance<PauseService>();
             _finder = finder;
         }
 
@@ -19,7 +21,7 @@ namespace _Game.Scripts.Balls
 
         public void Destroy(Ball ball)
         {
-            ServiceLocator.GetInstance<PauseService>().IsPaused = true;
+            _pauseService.IsPaused = true;
             
             List<Ball> _neighboringBalls = _finder.FindNeighborsBalls(ball);
             List<Ball> _destroyedBalls = new List<Ball> { ball };

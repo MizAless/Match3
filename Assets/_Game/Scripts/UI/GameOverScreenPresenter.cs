@@ -12,9 +12,18 @@ namespace _Game.Scripts.UI
         [SerializeField] private Text _newRecordLabel;
         [SerializeField] private Button _continueButton;
 
+        private PauseService _pauseService;
+        private Leaderboard.Leaderboard _leaderboard;
+
+        private void Awake()
+        {
+            _leaderboard = ServiceLocator.GetInstance<Leaderboard.Leaderboard>();
+            _pauseService = ServiceLocator.GetInstance<PauseService>();
+        }
+
         public void Init()
         {
-            if (ServiceLocator.GetInstance<Leaderboard.Leaderboard>().HasNewRecord)
+            if (_leaderboard.HasNewRecord)
             {
                 _newRecordLabel.gameObject.SetActive(true);
                 _continueButton.onClick.AddListener(() => GoToScene(Scene.Leaderboard));
@@ -32,7 +41,7 @@ namespace _Game.Scripts.UI
 
         private void GoToScene(Scene scene)
         {
-            ServiceLocator.GetInstance<PauseService>().IsPaused = false;
+            _pauseService.IsPaused = false;
             SceneLoader.Load(Scene.Leaderboard);
         }
     }

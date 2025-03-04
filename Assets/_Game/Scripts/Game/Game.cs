@@ -17,6 +17,7 @@ namespace _Game.Scripts.Game
         private readonly Colorizer _colorizer;
         private readonly Leaderboard.Leaderboard _leaderboard;
         private readonly Tutorial _tutorial;
+        private readonly PauseService _pauseService;
 
         private int _startRemainingMoves = 3;
 
@@ -25,7 +26,7 @@ namespace _Game.Scripts.Game
         public Game(IPlayerInput playerInput, BallsGrid ballsGrid)
         {
             _leaderboard = ServiceLocator.GetInstance<Leaderboard.Leaderboard>();
-
+            _pauseService = ServiceLocator.GetInstance<PauseService>();
             _playerInput = playerInput;
             _ballsGrid = ballsGrid;
             _colorizer = new Colorizer();
@@ -60,7 +61,7 @@ namespace _Game.Scripts.Game
 
         private void OnGameOvered()
         {
-            ServiceLocator.GetInstance<PauseService>().IsPaused = true;
+            _pauseService.IsPaused = true;
 
             var maxScore = 0;
 
@@ -72,7 +73,7 @@ namespace _Game.Scripts.Game
 
         private void OnBallsBallsDestroyed(IReadOnlyList<Ball> destroyedBalls)
         {
-            ServiceLocator.GetInstance<PauseService>().IsPaused = false;
+            _pauseService.IsPaused = false;
             
             int minActiveCol = destroyedBalls.Min(ball => ball.Coordinates.y);
             int maxActiveCol = destroyedBalls.Max(ball => ball.Coordinates.y);

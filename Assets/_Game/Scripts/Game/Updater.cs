@@ -7,7 +7,13 @@ namespace _Game.Scripts.Game
 {
     public class Updater : MonoBehaviour
     {
-        private List<ITickable> _tickableEntities = new List<ITickable>();
+        private readonly List<ITickable> _tickableEntities = new List<ITickable>();
+        private PauseService _pauseService;
+
+        private void Start()
+        {
+            _pauseService = ServiceLocator.GetInstance<PauseService>();
+        }
 
         public void Register(ITickable entity)
         {
@@ -19,8 +25,8 @@ namespace _Game.Scripts.Game
         {
             if (_tickableEntities.Count == 0)
                 enabled = false;
-            
-            if (ServiceLocator.GetInstance<PauseService>().IsPaused)
+
+            if (_pauseService.IsPaused)
                 return;
 
             foreach (var entity in _tickableEntities)

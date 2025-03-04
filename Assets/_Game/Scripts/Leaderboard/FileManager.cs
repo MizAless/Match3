@@ -7,6 +7,13 @@ namespace _Game.Scripts.Leaderboard
     public static class FileManager
     {
         private const string FileName = "records.csv";
+        
+        private static readonly Leaderboard _leaderboard;
+
+        static FileManager()
+        {
+            _leaderboard = ServiceLocator.GetInstance<Leaderboard>();
+        }
 
         public static void Save(int score)
         {
@@ -18,7 +25,7 @@ namespace _Game.Scripts.Leaderboard
             {
                 using StreamWriter writer = new StreamWriter(FileName, true);
                 writer.WriteLine(record);
-                ServiceLocator.GetInstance<Leaderboard>().HasNewRecord = true;
+                _leaderboard.HasNewRecord = true;
             }
             catch (Exception ex)
             {
